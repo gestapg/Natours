@@ -1,5 +1,12 @@
 const Tour = require('./../models/tourModel');
 
+exports.aliasTopTour = (req, res, next) => {
+  req.query.limit = '5';
+  req.query.sort = '-ratingsAverage,price';
+  req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
+  next();
+};
+
 exports.getAllTours = async (req, res) => {
   try {
     console.log(req.query);
@@ -26,10 +33,9 @@ exports.getAllTours = async (req, res) => {
       // console.log(sortBy);
       query = query.sort(sortBy);
       // sort('price ratingsAverage')
+    } else {
+      query.sort('-createdAt');
     }
-    // else {
-    //   query.sort('-createdAt');
-    // }
 
     // 3) Field Limiting
     if (req.query.fields) {
