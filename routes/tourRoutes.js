@@ -40,6 +40,8 @@ router
 // /tours-distance?distance=233&center=-40,45&unit=miles
 // /tours-distance/233/center/-40,45/unit/miles
 
+router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
+
 router
   .route('/')
   .get(tourController.getAllTours)
