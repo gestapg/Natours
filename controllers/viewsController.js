@@ -1,5 +1,6 @@
 const Tour = require('../models/tourModel');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   // 1) Get toyr data from collection
@@ -25,6 +26,9 @@ exports.getTour = catchAsync(async (req, res, next) => {
     path: 'reviews',
     fields: 'review rating user'
   });
+  if (!tour) {
+    return next(new AppError('Ther is no tour with that name', 404));
+  }
 
   // 2) Build Template
 
